@@ -10,16 +10,15 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
-import org.eclipse.microprofile.opentracing.Traced;
-
 import de.kieseltaucher.studies.tracing.outbound.GreetResponseTopic;
+import de.kieseltaucher.studies.tracing.tracing.JMSContextMediator;
 import de.kieseltaucher.studies.tracing.tracing.TraceLogger;
+import io.opentracing.Scope;
 
 @MessageDriven(name = "GreetTopicMDB", activationConfig = {
     @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = GreetResponseTopic.TOPIC_NAME),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
 })
-@Traced
 public class GreetTopicMDB implements MessageListener {
 
     private final Logger logger = Logger.getLogger(getClass().getName());
@@ -27,18 +26,26 @@ public class GreetTopicMDB implements MessageListener {
     @Inject
     private TraceLogger traceLogger;
 
+    @Inject
+    private JMSContextMediator jmsTracing;
+
     @Override
     public void onMessage(Message message) {
         logger.info(String.format("onMessage from %s", GreetResponseTopic.TOPIC_NAME));
-        String greetResponse = extractText(message);
-        traceLogger.log(String.format("Consumed greet-response \"%s\"", greetResponse));
+        try (Scope scope = contextFollowsFrom(message)) {
+            String greetResponse = extractText(message);
+            traceLogger.log(String.format("Consumed greet-response \"%s\"", greetResponse));
+        } catch (RuntimeException | JMSException e) {
+            traceLogger.error(e);
+        }
     }
 
-    private String extractText(Message message) {
-        try {
-            return ((TextMessage) message).getText();
-        } catch (JMSException e) {
-            throw new RuntimeException(e);
-        }
+    private Scope contextFollowsFrom(Message message) {
+        String name = getClass() + ".onMessage";
+        return jmsTracing.followsFrom(name, message);
+    }
+
+    private String extractText(Message message) throws JMSException {
+        return ((TextMessage) message).getText();
     }
 }

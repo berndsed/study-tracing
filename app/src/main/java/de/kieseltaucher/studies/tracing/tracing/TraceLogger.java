@@ -1,5 +1,7 @@
 package de.kieseltaucher.studies.tracing.tracing;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +23,14 @@ public class TraceLogger {
     public void log(String msg) {
         logger.log(Level.INFO, msg);
         activeSpanOrNoop().log(msg);
+    }
+
+    public void error(Exception e) {
+        logger.log(Level.INFO, e.toString(), e);
+        Map<String, String> fields = new HashMap<>();
+        fields.put("event", "error");
+        fields.put("error.object", e.toString());
+        activeSpanOrNoop().log(fields);
     }
 
     private Span activeSpanOrNoop() {
