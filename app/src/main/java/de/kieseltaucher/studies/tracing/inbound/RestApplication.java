@@ -1,4 +1,4 @@
-package de.kieseltaucher.studies.tracing.rest;
+package de.kieseltaucher.studies.tracing.inbound;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

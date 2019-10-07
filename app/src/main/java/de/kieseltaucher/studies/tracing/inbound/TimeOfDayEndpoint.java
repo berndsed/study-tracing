@@ -1,4 +1,4 @@
-package de.kieseltaucher.studies.tracing.rest;
+package de.kieseltaucher.studies.tracing.inbound;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 

@@ -1,4 +1,4 @@
-package de.kieseltaucher.studies.tracing.rest;
+package de.kieseltaucher.studies.tracing.inbound;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
