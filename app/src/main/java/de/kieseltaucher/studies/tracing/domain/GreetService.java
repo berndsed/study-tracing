@@ -3,6 +3,7 @@ package de.kieseltaucher.studies.tracing.domain;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
+import de.kieseltaucher.studies.tracing.outbound.GreetResponseTopic;
 import de.kieseltaucher.studies.tracing.outbound.TimeOfDayClient;
 import de.kieseltaucher.studies.tracing.tracing.TraceLogger;
 
@@ -13,11 +14,16 @@ public class GreetService {
     private TimeOfDayClient timeOfDayClient;
 
     @Inject
+    private GreetResponseTopic greetResponseTopic;
+
+    @Inject
     private TraceLogger traceLogger;
 
     public String getGreeting() {
         TimeOfDay timeOfDay = getTimeOfDay();
-        return chooseResponse(timeOfDay);
+        String response = chooseResponse(timeOfDay);
+        publishResponse(response);
+        return response;
     }
 
     private TimeOfDay getTimeOfDay() {
@@ -41,5 +47,10 @@ public class GreetService {
             default:
                 throw new IllegalStateException("My goodness, it's the middle of the night");
         }
+    }
+
+    private void publishResponse(String response) {
+        traceLogger.log(String.format("Posting response \"%s\" to topic", response));
+        greetResponseTopic.publish(response);
     }
 }

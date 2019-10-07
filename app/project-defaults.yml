@@ -3,3 +3,9 @@ thorntail:
     service-name: greeter
     sampler-type: const
     sampler-parameter: 1
+
+  messaging-activemq:
+    servers:
+      default:
+        jms-topics:
+          greet-topic: {}
