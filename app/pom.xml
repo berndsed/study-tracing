@@ -68,7 +68,7 @@
     </dependency>
     <dependency>
       <groupId>io.thorntail</groupId>
-      <artifactId>opentracing</artifactId>
+      <artifactId>microprofile-opentracing</artifactId>
     </dependency>
     <dependency>
       <groupId>io.thorntail</groupId>
