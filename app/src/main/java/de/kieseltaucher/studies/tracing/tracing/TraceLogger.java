@@ -1,4 +1,4 @@
-package de.kieseltaucher.studies.tracing.kieseltauchertracing.tracing;
+package de.kieseltaucher.studies.tracing.tracing;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
