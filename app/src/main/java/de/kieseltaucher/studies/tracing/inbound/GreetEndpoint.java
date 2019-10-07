@@ -13,7 +13,7 @@ import de.kieseltaucher.studies.tracing.domain.TimeOfDay;
 import de.kieseltaucher.studies.tracing.tracing.TraceLogger;
 
 @Path("/hello")
-public class HelloWorldEndpoint {
+public class GreetEndpoint {
 
 	private final Logger logger = Logger.getLogger(getClass().getName());
 
@@ -53,6 +53,5 @@ public class HelloWorldEndpoint {
 			default:
 				throw new IllegalStateException("My goodness, it's the middle of the night");
 		}
-
 	}
 }
