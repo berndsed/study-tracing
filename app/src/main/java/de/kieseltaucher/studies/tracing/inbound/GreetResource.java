@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 import de.kieseltaucher.studies.tracing.domain.GreetService;
 
 @Path("/hello")
-public class GreetEndpoint {
+public class GreetResource {
 
 	private final Logger logger = Logger.getLogger(getClass().getName());
 

@@ -14,7 +14,7 @@ import de.kieseltaucher.studies.tracing.domain.TimeOfDay;
 import de.kieseltaucher.studies.tracing.domain.TimeOfDayService;
 
 @Path("/time-of-day")
-public class TimeOfDayEndpoint {
+public class TimeOfDayResource {
 
     private final Logger logger = Logger.getLogger(getClass().getName());
 
