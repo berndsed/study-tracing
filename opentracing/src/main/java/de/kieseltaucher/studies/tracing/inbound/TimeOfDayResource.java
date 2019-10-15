@@ -8,10 +8,9 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.ServiceUnavailableException;
 
-import de.kieseltaucher.studies.tracing.domain.TimeOfDay;
-import de.kieseltaucher.studies.tracing.domain.TimeOfDayService;
+import de.kieseltaucher.studies.tracing.app.TimeOfDay;
+import de.kieseltaucher.studies.tracing.app.TimeOfDayService;
 
 @Path("/time-of-day")
 public class TimeOfDayResource {
@@ -20,22 +19,11 @@ public class TimeOfDayResource {
 
     @Inject
     private TimeOfDayService timeOfDayService;
-    @Inject
-    private Availability availability;
-
     @GET
     @Produces(APPLICATION_JSON)
     public TimeOfDay doGet() {
         logger.info("GET /time-of-day");
-        throwIfUnavailable();
         return timeOfDayService.getTimeOfDay();
-    }
-
-    private void throwIfUnavailable() {
-        if (!availability.isAvailable()) {
-            logger.warning("Time-of-day-service is unavailable");
-            throw new ServiceUnavailableException("The time-of-day-service is currently unavailable. Please come back later.");
-        }
     }
 
 }

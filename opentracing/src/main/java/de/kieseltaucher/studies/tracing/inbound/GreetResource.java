@@ -8,7 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import de.kieseltaucher.studies.tracing.domain.GreetService;
+import de.kieseltaucher.studies.tracing.app.GreetService;
 
 @Path("/hello")
 public class GreetResource {

@@ -10,16 +10,17 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
-import de.kieseltaucher.studies.tracing.outbound.GreetResponseTopic;
 import de.kieseltaucher.studies.tracing.tracing.JMSContextMediator;
 import de.kieseltaucher.studies.tracing.tracing.TraceLogger;
 import io.opentracing.Scope;
 
 @MessageDriven(name = "GreetTopicMDB", activationConfig = {
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = GreetResponseTopic.TOPIC_NAME),
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = GreetTopicMDB.TOPIC_NAME),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
 })
 public class GreetTopicMDB implements MessageListener {
+
+    public static final String TOPIC_NAME = "java:/jms/topic/greet-topic";
 
     private final Logger logger = Logger.getLogger(getClass().getName());
 
@@ -31,7 +32,7 @@ public class GreetTopicMDB implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
-        logger.info(String.format("onMessage from %s", GreetResponseTopic.TOPIC_NAME));
+        logger.info(String.format("onMessage from %s", TOPIC_NAME));
         try (Scope scope = contextFollowsFrom(message)) {
             String greetResponse = extractText(message);
             traceLogger.log(String.format("Consumed greet-response \"%s\"", greetResponse));

@@ -1,4 +1,4 @@
-package de.kieseltaucher.studies.tracing.domain;
+package de.kieseltaucher.studies.tracing.app;
 
 public enum TimeOfDay {
 

@@ -1,4 +1,4 @@
-package de.kieseltaucher.studies.tracing.domain;
+package de.kieseltaucher.studies.tracing.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
