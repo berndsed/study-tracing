@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: greeter
+
+  sleuth:
+    sampler:
+      probability: 1
+
+  jms:
+    pub-sub-domain: true
