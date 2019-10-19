@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import de.kieseltaucher.studies.tracing.tracing.app.TimeOfDay;
-import de.kieseltaucher.studies.tracing.tracing.outbound.TimeOfDayClient;
+import de.kieseltaucher.studies.tracing.app.TimeOfDay;
 
 @Component
 class TimeOfDayClientImpl implements TimeOfDayClient {

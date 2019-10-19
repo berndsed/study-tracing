@@ -4,8 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import de.kieseltaucher.studies.tracing.tracing.tracing.TraceLogger;
-
 @Component
 class TraceLoggerImpl implements TraceLogger {
 

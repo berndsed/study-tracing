@@ -5,7 +5,6 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 import de.kieseltaucher.studies.tracing.inbound.GreetTopicListener;
-import de.kieseltaucher.studies.tracing.tracing.outbound.GreetResponseTopic;
 
 @Component
 class GreetResponseTopicImpl implements GreetResponseTopic {

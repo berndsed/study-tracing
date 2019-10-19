@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.kieseltaucher.studies.tracing</groupId>
   <artifactId>kieseltaucher-tracing</artifactId>
-  <name>Thorntail Example</name>
+  <name>Study tracing</name>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   
