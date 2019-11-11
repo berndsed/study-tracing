@@ -10,6 +10,8 @@ import io.opentracing.Scope;
 import io.opentracing.Span;
 import io.opentracing.SpanContext;
 import io.opentracing.Tracer;
+import io.opentracing.noop.NoopSpan;
+import io.opentracing.noop.NoopTracerFactory;
 import io.opentracing.propagation.Format;
 import io.opentracing.propagation.TextMap;
 
@@ -17,7 +19,7 @@ import io.opentracing.propagation.TextMap;
 public class JMSContextMediator {
 
     @Inject
-    private Tracer tracer;
+    private Tracer tracer = NoopTracerFactory.create();
 
     public JMSProducer configure(JMSProducer producer) {
         inject(new JMSContextCarrier(producer));
@@ -30,9 +32,14 @@ public class JMSContextMediator {
     }
 
     private void inject(TextMap carrier) {
-        tracer.inject(tracer.activeSpan().context(),
+        Span span = activeSpanOrNoop();
+        tracer.inject(span.context(),
                       Format.Builtin.TEXT_MAP,
                       carrier);
+    }
+
+    private Span activeSpanOrNoop() {
+        return tracer.activeSpan() != null ? tracer.activeSpan() : NoopSpan.INSTANCE;
     }
 
     public Scope followsFrom(String spanName, Message message) {

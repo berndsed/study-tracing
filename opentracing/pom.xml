@@ -16,6 +16,18 @@
     <failOnMissingWebXml>false</failOnMissingWebXml>
   </properties>
 
+  <profiles>
+    <profile>
+      <id>jaeger</id>
+      <dependencies>
+        <dependency>
+          <groupId>io.thorntail</groupId>
+          <artifactId>jaeger</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -72,10 +84,6 @@
     <dependency>
       <groupId>io.thorntail</groupId>
       <artifactId>microprofile-opentracing</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.thorntail</groupId>
-      <artifactId>jaeger</artifactId>
     </dependency>
     <dependency>
       <groupId>io.thorntail</groupId>
