@@ -10,11 +10,12 @@ import javax.inject.Inject;
 
 import io.opentracing.Span;
 import io.opentracing.Tracer;
+import io.opentracing.noop.NoopSpan;
 
 @Dependent
 public class TraceLoggerImpl implements TraceLogger {
 
-    private static final Span NOOP_SPAN = new NoopSpan();
+    private static final Span NOOP_SPAN = NoopSpan.INSTANCE;
 
     @Inject
     private Tracer tracer;
