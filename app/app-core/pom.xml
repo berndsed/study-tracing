@@ -12,7 +12,6 @@
   <artifactId>kieseltaucher-tracing-app-core</artifactId>
 
   <name>Application core</name>
-  <version>1.0.0-SNAPSHOT</version>
 
   <dependencies>
     <dependency>

@@ -11,6 +11,8 @@
   <artifactId>kieseltaucher-tracing-opentracing</artifactId>
   <packaging>war</packaging>
 
+  <name>Opentracing</name>
+
   <properties>
     <version.thorntail>2.5.0.Final</version.thorntail>
     <failOnMissingWebXml>false</failOnMissingWebXml>

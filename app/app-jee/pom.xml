@@ -11,6 +11,8 @@
 
   <artifactId>kieseltaucher-tracing-app-jee</artifactId>
 
+  <name>Application JEE</name>
+
   <dependencies>
     <dependency>
       <groupId>de.kieseltaucher.studies.tracing</groupId>

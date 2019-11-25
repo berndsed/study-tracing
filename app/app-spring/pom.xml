@@ -11,6 +11,8 @@
 
   <artifactId>kieseltaucher-tracing-app-spring</artifactId>
 
+  <name>Application Spring</name>
+
   <dependencies>
 
     <dependency>
