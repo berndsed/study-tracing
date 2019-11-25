@@ -1,7 +1,5 @@
 package de.kieseltaucher.studies.tracing.inbound;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -20,7 +18,7 @@ public class TimeOfDayResource {
     @Inject
     private TimeOfDayService timeOfDayService;
     @GET
-    @Produces(APPLICATION_JSON)
+    @Produces("application/json")
     public TimeOfDay doGet() {
         logger.info("GET /time-of-day");
         return timeOfDayService.getTimeOfDay();

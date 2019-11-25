@@ -14,6 +14,7 @@
   <modules>
     <module>app-core</module>
     <module>app-spring</module>
+    <module>app-jee</module>
   </modules>
   <packaging>pom</packaging>
 
