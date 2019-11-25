@@ -9,27 +9,11 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>kieseltaucher-tracing-app</artifactId>
-  <name>Thorntail Example</name>
+  <name>Application</name>
   <version>1.0.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <modules>
+    <module>app-core</module>
+  </modules>
+  <packaging>pom</packaging>
 
-  <dependencies>
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest-library</artifactId>
-    </dependency>
-  </dependencies>
 </project>
