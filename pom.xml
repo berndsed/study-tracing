@@ -12,6 +12,7 @@
     <module>app</module>
     <module>opentracing</module>
     <module>sleuth</module>
+    <module>agents</module>
   </modules>
 
   <properties>

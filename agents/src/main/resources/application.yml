@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: greeter
+
+  jms:
+    pub-sub-domain: true
