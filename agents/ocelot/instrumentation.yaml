@@ -1,0 +1,21 @@
+inspectit:
+  instrumentation:
+    rules:
+      span_starting_rule:
+        tracing:
+          start-span: true
+        scopes:
+          greet_scope: true
+          time_of_day_scope: true
+
+    scopes:
+      greet_scope:
+        type:
+          name: "de.kieseltaucher.studies.tracing.app.GreetService"
+        methods:
+          - name: "getGreeting"
+      time_of_day_scope:
+        type:
+          name: "de.kieseltaucher.studies.tracing.app.TimeOfDayService"
+        methods:
+          - name: "getTimeOfDay"

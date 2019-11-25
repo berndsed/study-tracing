@@ -121,7 +121,7 @@ Sie wird folgendermaßen gestartet:
 
 Anschließend muss noch der Jaeger-Tracer zum Laufen gebracht werden:
 
-    docker run -it --rm -p 6831:6831/udp -p 16686:16686 jaegertracing/all-in-one
+    docker run -it --rm -p 14268:14268 -p 6831:6831/udp -p 16686:16686 jaegertracing/all-in-one
 
 Nun kann man die [Greet-Resource](http://localhost:8080/hello) abfragen und in der [Jaeger-UI](http://localhost:16686/search) nach Traces suchen:
 
@@ -175,3 +175,44 @@ Der Tracer Zipkin steht als Docker-Image zur Verfügung:
 Anschließend kann auf der [Zipkin_UI](http://localhost:9411) nach Traces der [Greet-Resource](http://localhost:8080/hello) gesucht werden:
 
 ![Trace in Zipkin](screenshots/EinTraceMitZipkin.png)
+
+
+## Tracing-Agenten
+
+Man kann eine Java-Anwendung auch überwachen, ohne den Quellcode anzupassen. Denn sie lässt sich über einen sogenannten Java-Agent [instrumentieren](https://docs.oracle.com/en/java/javase/11/docs/api/java.instrument/java/lang/instrument/package-summary.html). Die JVM erlaubt dem Java-Agent den Bytecode einer laufenden Anwendung zu modifizieren. Dadurch wird es möglich, das Tracing zur Laufzeit in die Anwendung einzuschleusen. Die Applikation selbst bleibt unverändert.
+
+Diese Technologie wird von einigen kommerziellen Anbietern angeboten. Darunter sind  [Dynatrace ](https://www.dynatrace.com/support/doc/appmon/installation/set-up-agents/java-agent-configuration/)
+und [Datadog](https://docs.datadoghq.com/tracing/setup/java/). Diese Angebote sind umfangreich und dementsprechend kostenpflichtig. Sie umfassen sehr viel mehr als ein Distributed-Tracing, und bieten eine vollumfängliche Überwachung der Servicelandschaft über die technische Infrastruktur, die Middleware, die Logdateien bis hin zu den Applikationen selbst.
+
+Um das Prinzip zu verdeutlichen, nutze ich in der Studie den Opentracing-kompatiblen  Java-Agent [inspectIt Ocelot](https://github.com/inspectIT/inspectit-ocelot).
+
+#### Wie wird das Tracing aktiviert?
+
+Die Konfiguration, die Ocelot verwenden soll, liegt in [diesem](agents/ocelot) Verzeichnis.
+Die Konfigurationsdatei [config.properties](agents/ocelot/config.properties) teilt Ocelot mit, wo das Jaeger-Backend lauscht.
+Was an das Backend gemeldet werden soll, wird in der Datei [instrumentation.yaml](agents/ocelot/instrumentation.yaml) festgelegt. Das Tracing beschränkt sich auf die synchronen Aufrufe über HTTP (ob auch die asynchronen Aufrufe mit Ocelot abgebildet werden können, habe ich nicht untersucht).
+
+Um die Anwendung zur Laufzeit zu instrumentieren, muss sie mit dem Java-Agent gestartet werden:
+
+    java -Dinspectit.config.file-based.path=ocelot -javaagent:"inspectit-ocelot-agent-0.4.jar" -jar target/kieselt...
+
+Das Argument ``-javaagent`` teilt der JVM mit, dass der Ocelot-Agent gebootet werden soll. Die Umgebungsvariable ``inspectit.config.file-based.path=ocelot`` wiederum dem Ocelot-Agent, wo die Konfiguration für die Instrumentierung zu finden ist.
+Man kann die Instrumentierung übrigens zur Laufzeit verändern. Der Agent überwacht das Verzeichnis, und aktualisiert gegebenenfalls seine Konfiguration.
+
+#### Wie kann ich das ausprobieren?
+
+Die Beispielanwendung im Modul agents ist eine Spring-Boot-Applikation und muss folgendermaßen gestartet werden, um das Tracing mit Ocelot zu aktivieren:
+
+    mvn package
+    cd agents
+    java -Dinspectit.config.file-based.path=ocelot \
+         -javaagent:"inspectit-ocelot-agent-0.4.jar" \
+         -jar target/kieseltaucher-tracing-agents-1.0.0-SNAPSHOT.jar
+    
+Anschließend muss noch der Jaeger-Tracer gestartet werden:
+
+    docker run -it --rm -p 14268:14268 -p 6831:6831/udp -p 16686:16686 jaegertracing/all-in-one
+
+Die Traces der  [Greet-Resource](http://localhost:8080/hello) erscheinen als Service "greeter-ocelot" in der [Jaeger-UI](http://localhost:16686/search).
+Wie gewünscht sind die Aufrufe der Time-Of-Day-Resource als Kinder der Greet-Resource-Anfragen dargestellt.
+
