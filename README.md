@@ -2,6 +2,8 @@
 
 This is a sample project to investigate tracing.
 
+The insights are published [here](http://kieseltaucher.de/blog/2019/Tracing.html) (German only, sorry).
+
 ## Requirements
 
 * Maven 3
